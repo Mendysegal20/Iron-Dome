@@ -135,6 +135,7 @@
     <ClCompile Include="src\Missile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\EnemyRocket.h" />
     <ClInclude Include="include\Missile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

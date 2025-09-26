@@ -2,10 +2,9 @@
 
 
 
-Missile::Missile(const Vector2& position, const Vector2& velocity)
+Missile::Missile(const Vector2& position, const Vector2& velocity):
+	position(position), velocity(velocity), center({ 0,0 })
 {
-	this->position = position;
-	this->velocity = velocity;
 
 	float tipPointX = position.x; // center x of the missile (at the tip)
 	float tipPointY = position.y; // center y of the missile (at the tip)
@@ -24,10 +23,10 @@ Missile::Missile(const Vector2& position, const Vector2& velocity)
 
 
 
-void Missile::rotate(float angle)
+void Missile::rotate(const float angle)
 {
-	Vector2 center = { 0, 0 };
 
+	center = { 0,0 };
 	// Calculate the center of the missile's body by averaging the points
 	for (int i = 0; i < 5; i++)
 	{
@@ -37,7 +36,8 @@ void Missile::rotate(float angle)
 
 	center.x /= 5.0f;
 	center.y /= 5.0f;
-
+	
+	
 	// here we use radians directly in the sin and cos functions
 	// radians to degrees: degrees = radians * (180 / PI)
 	float s = sin(angle);

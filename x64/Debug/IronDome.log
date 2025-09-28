@@ -4,9 +4,11 @@ C:\Users\mendy\source\repos\IronDome\IronDome\include\EnemyRocket.h(3,9): warnin
       C:\vcpkg\installed\x64-windows\include\raylib.h(110,13):
       see previous definition of 'PI'
   
-C:\Users\mendy\source\repos\IronDome\IronDome\include\EnemyRocket.h(45,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\mendy\source\repos\IronDome\IronDome\include\EnemyRocket.h(31,42): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'src/main.cpp')
   
+C:\Users\mendy\source\repos\IronDome\IronDome\src\main.cpp(22,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\mendy\source\repos\IronDome\IronDome\src\main.cpp(56,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   IronDome.vcxproj -> C:\Users\mendy\source\repos\IronDome\x64\Debug\IronDome.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

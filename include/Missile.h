@@ -10,13 +10,11 @@ public:
 
 	Vector2 position;
 	Vector2 velocity;
+	//Rectangle hitbox;
 	Vector2 center;
-	Vector2 missileBody[5];
-	
-	Missile(const Vector2& position, const Vector2& velocity);
-
-	void rotate(const float angle);
-
+	Missile(const Vector2& position, const Vector2& velocity, 
+		const float width, const float height);
+	//void draw() {};
 };
 
 

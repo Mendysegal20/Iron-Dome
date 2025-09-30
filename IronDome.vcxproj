@@ -131,11 +131,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\EnemyRocket.cpp" />
+    <ClCompile Include="src\Interceptor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Missile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\EnemyRocket.h" />
+    <ClInclude Include="include\Interceptor.h" />
     <ClInclude Include="include\Missile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

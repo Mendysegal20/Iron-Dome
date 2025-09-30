@@ -21,12 +21,24 @@
     <ClCompile Include="src\Missile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\EnemyRocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Interceptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Missile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EnemyRocket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Interceptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,8 +15,8 @@ namespace constants
 
 
 	const char bg[20] = "assets/bg1.png";
-	const char interceptorTexture[25] = "assets/interceptor2.png";
-	const char rocketTexturePath[20] = "assets/missile4.png";
+	const char interceptorTexturePath[25] = "assets/interceptor2.png";
+	const char rocketTexturePath[20] = "assets/missile5.png";
 }
 
 

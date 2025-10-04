@@ -10,11 +10,13 @@ public:
 
 	EnemyRocket(const Vector2& position, const Vector2& velocity);
 	~EnemyRocket();
-	void update(const float dt);
+	//void update(const float dt);
 	void draw() const override;
+	Line getHitLine();
 	
 private:
 	
+	void applyForces(const float dt) override;
 	float gravity;
 	static Texture2D rocketTexture;
 };

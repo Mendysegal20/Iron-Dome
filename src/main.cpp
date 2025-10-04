@@ -77,49 +77,18 @@ int main()
     SetTargetFPS(60);
 
     Image image = LoadImage("assets/bg1.png");
-    /*Image inter = LoadImage("assets/interceptor2.png");
-    Image rocket = LoadImage("assets/missile3.png");*/
-
     Texture2D texture = LoadTextureFromImage(image);
-    /*Texture2D interceptorTexture = LoadTextureFromImage(inter);
-    Texture2D rocketTexture = LoadTextureFromImage(rocket);*/
-
     UnloadImage(image);
-    /*UnloadImage(inter);
-    UnloadImage(rocket);*/
 
-    /*Vector2 rocketPos = { 690, 700 };
-    Vector2 interceptorPos = { 580, 690 };*/
-
-    /*float raduisRocket = 5.0f;
-    float radiusInterceptor = 5.0f;*/
-
-    /*Vector2 rocketCenter;
-    Vector2 interceptorHead;*/
-    
-    /*Vector2 lineStart, lineEnd;
-    Vector2 rocketLineStart = rocketPos,
-        rocketLineEnd = {rocketPos.x,
-        rocketPos.y + (float)rocketTexture.height};*/
-
-    //float angle = 0.5f;
     float deltaTime;
     
-    EnemyRocket enemy(Vector2{ 1500, 200 }, Vector2{ 190.0f, 5.0f });
-    EnemyRocket enemy2(Vector2{ 1500, 100 }, Vector2{ 220.0f, 0.0f });
-    Interceptor interceptor(Vector2{ 20, 630 }, Vector2{ 200.0f, 3.0f });
+    EnemyRocket enemy(Vector2{ 1500, 10 }, Vector2{ 390.0f, 0.0f });
+    EnemyRocket enemy2(Vector2{ 1500, 50 }, Vector2{ 420.0f, 140.0f });
+    Interceptor interceptor(Vector2{ 20, 630 }, Vector2{ 420.0f, 200.0f });
 
     while (!WindowShouldClose())
     {
         deltaTime = GetFrameTime();
-
-        //moveSprite(interceptorPos);
-
-        //rotateCircle(interceptorHead, interceptorPos, { (float)interceptorTexture.width, (float)interceptorTexture.height }, angle);
-
-        //rotateLine(lineStart, lineEnd, interceptorPos, { (float)interceptorTexture.width, (float)interceptorTexture.height }, angle);
-
-        //rocketCenter = { rocketPos.x + (float)rocketTexture.width - 5, rocketPos.y + (float)rocketTexture.height / 2.0f };
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -127,34 +96,20 @@ int main()
 
         
         enemy.update(deltaTime);
-        interceptor.update(deltaTime);
         enemy2.update(deltaTime);
+        interceptor.update(deltaTime);
+        interceptor.chase(enemy2.getHitLine(), deltaTime);
         
-        enemy.rotateHitLine();
+        /*enemy.rotateHitLine();
         interceptor.rotateHitLine();
-        enemy2.rotateHitLine();
+        enemy2.rotateHitLine();*/
+        interceptor.checkForCollition(enemy2.getHitLine());
+        
 
         
         enemy.draw();
         interceptor.draw();
         enemy2.draw();
-
-
-        //DrawTextureEx(rocketTexture, rocketPos, 0.0f, 1.0f, WHITE);
-        //DrawTextureEx(interceptorTexture, interceptorPos, angle, 1.0f, WHITE);
-
-        //DrawCircle(rocketCenter.x, rocketCenter.y, raduisRocket, RED);
-        //DrawCircle(interceptorHead.x, interceptorHead.y, radiusInterceptor, BLUE);
-
-        //DrawLineV(lineStart, lineEnd, RED); // הקו שמסתובב עם המיירט
-        //DrawLineV(rocketLineStart, rocketLineEnd, RED);
-
-
-        /*if (CheckCollisionCircles(rocketCenter, raduisRocket, interceptorHead, radiusInterceptor))
-            DrawText("Collision!", 100, 100, 30, RED);*/
-
-        //if(CheckCollisionLines(lineStart, lineEnd, rocketLineStart, rocketLineEnd, NULL))
-            //DrawText("Collision!", 400, 100, 30, BLUE);
 
         EndDrawing();
     }

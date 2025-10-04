@@ -2,22 +2,16 @@
 #include "Constants.h"
 
 
-Texture2D EnemyRocket::rocketTexture;
+Texture2D EnemyRocket::rocketTexture = { 0 };
 
 
 
 EnemyRocket::EnemyRocket(const Vector2& position, const Vector2& velocity)
-	:Missile(position, velocity, constants::rocketWidth, constants::rocketHeight)
+	:Missile(position, Vector2{ -1, 1 }, velocity, 
+		constants::rocketWidth, constants::rocketHeight)
 {
-	gravity = 30.0f;
-
-	// if the texture was not loaded yet
-	if (rocketTexture.id == 0)
-	{
-		Image rocket = LoadImage(constants::rocketTexturePath);
-		rocketTexture = LoadTextureFromImage(rocket);
-		UnloadImage(rocket);
-	}
+	gravity = 5.0f;
+	loadAssets(rocketTexture, constants::rocketTexturePath);
 }
 
 
@@ -30,13 +24,13 @@ EnemyRocket::~EnemyRocket()
 
 
 
-void EnemyRocket::update(const float dt)
-{
-	velocity.y += gravity * dt;
-	position.x -= velocity.x * dt;
-	position.y += velocity.y * dt;
-	angle = -atan2(velocity.y, velocity.x) * RAD2DEG;
-}
+//void EnemyRocket::update(const float dt)
+//{
+//	velocity.y += gravity * dt;
+//	position.x += velocity.x * dt;
+//	position.y += velocity.y * dt;
+//	angle = atan2f(velocity.y, velocity.x) * RAD2DEG;
+//}
 
 
 
@@ -47,4 +41,17 @@ void EnemyRocket::draw() const
 	DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
 }
 
+
+
+void EnemyRocket::applyForces(const float dt)
+{
+	velocity.y += gravity * dt;
+}
+
+
+
+EnemyRocket::Line EnemyRocket::getHitLine()
+{
+	return hitLine;
+}
 

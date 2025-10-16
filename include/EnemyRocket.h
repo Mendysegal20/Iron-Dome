@@ -9,10 +9,15 @@ class EnemyRocket : public Missile
 public:
 
 	EnemyRocket(const Vector2& position, const Vector2& velocity);
-	~EnemyRocket();
+	//~EnemyRocket();
+	static void loadRocketTexture();
+	static void unloadRocketTexture();
 	//void update(const float dt);
 	void draw() const override;
-	Line getHitLine();
+	float getGravity() const;
+	Vector2 getVelocity() const;
+	Line getHitLine() const;
+
 	
 private:
 	

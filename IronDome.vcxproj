@@ -135,12 +135,16 @@
     <ClCompile Include="src\Interceptor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Missile.cpp" />
+    <ClCompile Include="src\Simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Battery.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\EnemyRocket.h" />
     <ClInclude Include="include\Interceptor.h" />
     <ClInclude Include="include\Missile.h" />
+    <ClInclude Include="include\Radar.h" />
+    <ClInclude Include="include\Simulation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

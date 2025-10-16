@@ -17,8 +17,8 @@ Missile::Missile(const Vector2& position, const Vector2& direction,
 	this->center = { position.x + width / 2.0f,
 		position.y + height / 2.0f };
 	
-	this->hitLine.lineStart = {0, 0};
-	this->hitLine.lineEnd = {0, 0};
+	this->hitLine.lineStart = {position.x, position.y / 2.0f};
+	this->hitLine.lineEnd = {position.x - width, position.y / 2.0f};
 }
 
 
@@ -36,15 +36,15 @@ void Missile::update(const float dt)
 
 
 
-void Missile::loadAssets(Texture2D& texture, const char* texturePath)
-{
-	if (texture.id == 0)
-	{
-		Image img = LoadImage(texturePath);
-		texture = LoadTextureFromImage(img);
-		UnloadImage(img);
-	}
-}
+//void Missile::loadAssets(Texture2D& texture, const char* texturePath)
+//{
+//	if (texture.id == 0)
+//	{
+//		Image img = LoadImage(texturePath);
+//		texture = LoadTextureFromImage(img);
+//		UnloadImage(img);
+//	}
+//}
 
 
 
@@ -88,6 +88,3 @@ void Missile::rotateHitLine()
 	hitLine.lineEnd.x = position.x + oldEnd.x * cosf(radian) - oldEnd.y * sinf(radian);
 	hitLine.lineEnd.y = position.y + oldEnd.x * sinf(radian) + oldEnd.y * cosf(radian);
 }
-
-
-

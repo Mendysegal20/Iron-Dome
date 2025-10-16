@@ -21,7 +21,7 @@ public:
 protected:
 
 	virtual void applyForces(const float dt) = 0;
-	void loadAssets(Texture2D& texture, const char* texturePath);
+	//void loadAssets(Texture2D& texture, const char* texturePath);
 	void rotateHitLine();
 
 	float angle;

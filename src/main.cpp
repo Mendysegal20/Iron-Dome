@@ -1,8 +1,10 @@
 #include <iostream>
 #include <raylib.h>
-#include "Missile.h"
-#include "EnemyRocket.h"
-#include "Interceptor.h"
+//#include "EnemyRocket.h"
+//#include "Interceptor.h"
+#include "Simulation.h"
+//#include "Radar.h"
+
 
 //void moveSprite(Vector2& position)
 //{
@@ -73,48 +75,64 @@
 
 int main()
 {
-    InitWindow(1500, 867, "Iron Dome Simulation");
-    SetTargetFPS(60);
 
-    Image image = LoadImage("assets/bg1.png");
-    Texture2D texture = LoadTextureFromImage(image);
-    UnloadImage(image);
 
-    float deltaTime;
-    
-    EnemyRocket enemy(Vector2{ 1500, 10 }, Vector2{ 390.0f, 0.0f });
-    EnemyRocket enemy2(Vector2{ 1500, 50 }, Vector2{ 420.0f, 140.0f });
-    Interceptor interceptor(Vector2{ 20, 630 }, Vector2{ 420.0f, 200.0f });
+	Simulation simulation;
+	simulation.init();
+	simulation.run();
 
-    while (!WindowShouldClose())
-    {
-        deltaTime = GetFrameTime();
 
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawTexture(texture, 0, 0, WHITE);
 
-        
-        enemy.update(deltaTime);
-        enemy2.update(deltaTime);
-        interceptor.update(deltaTime);
-        interceptor.chase(enemy2.getHitLine(), deltaTime);
-        
-        /*enemy.rotateHitLine();
-        interceptor.rotateHitLine();
-        enemy2.rotateHitLine();*/
-        interceptor.checkForCollition(enemy2.getHitLine());
-        
+ //   //SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+ //   InitWindow(1500, 867, "Iron Dome Simulation");
+ //   SetTargetFPS(60);
 
-        
-        enemy.draw();
-        interceptor.draw();
-        enemy2.draw();
+ //   Image image = LoadImage(constants::bgPath);
+ //   Texture2D texture = LoadTextureFromImage(image);
+ //   UnloadImage(image);
 
-        EndDrawing();
-    }
+ //   float deltaTime;
+ //   
+ //   EnemyRocket enemy(Vector2{ 1500, 10 }, Vector2{ 390.0f, 0.0f });
+ //   EnemyRocket enemy2(Vector2{ 1500, 50 }, Vector2{ 320.0f, 140.0f });
+ //   Interceptor interceptor(Vector2{ 5, 600 }, Vector2{ 470.0f, 200.0f });
+ //   Interceptor interceptor2(Vector2{ 15, 600 }, Vector2{ 470.0f, 200.0f });
+	//Radar radar;
+ //   
 
-    UnloadTexture(texture);
+ //   radar.evaluateThreat(enemy2);
+ //   radar.evaluateThreat(enemy);
 
-    CloseWindow();
+ //   while (!WindowShouldClose())
+ //   {
+ //       deltaTime = GetFrameTime();
+
+ //       BeginDrawing();
+ //       ClearBackground(RAYWHITE);
+ //       DrawTexture(texture, 0, 0, WHITE);
+
+ //       
+ //       enemy.update(deltaTime);
+ //       enemy2.update(deltaTime);
+	//	
+ //       
+ //       interceptor.update(deltaTime);
+ //       interceptor.chase(enemy.getHitLine(), deltaTime); 
+ //       interceptor.checkForCollition(enemy.getHitLine());
+ //       
+	//	interceptor2.update(deltaTime);
+ //       interceptor2.chase(enemy2.getHitLine(), deltaTime);
+	//	interceptor2.checkForCollition(enemy2.getHitLine());
+ //       
+ //       enemy.draw();
+ //       interceptor.draw();
+	//	interceptor2.draw();
+ //       enemy2.draw();
+
+ //       EndDrawing();
+ //   }
+
+ //   UnloadTexture(texture);
+
+ //   CloseWindow();
 }

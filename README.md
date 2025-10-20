@@ -1,3 +1,4 @@
 # A simulation of the Iron Dome defending a big city from rocket attacks 🚀
 
-<img width="752" height="456" alt="image" src="https://github.com/user-attachments/assets/b19f9cc7-f85b-4489-b41a-cd561038ea6a" />
+<img width="754" height="456" alt="image" src="https://github.com/user-attachments/assets/8abbf6be-3a3f-488e-a88f-f7010f52b9cb" />
+

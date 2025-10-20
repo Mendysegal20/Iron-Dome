@@ -30,6 +30,15 @@
     <ClCompile Include="src\Simulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Explosion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Battery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Missile.h">
@@ -51,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Simulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Explosion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

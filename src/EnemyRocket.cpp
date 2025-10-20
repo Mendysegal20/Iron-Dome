@@ -90,8 +90,3 @@ Vector2 EnemyRocket::getVelocity() const
 }
 
 
-EnemyRocket::Line EnemyRocket::getHitLine() const
-{
-	return hitLine;
-}
-

@@ -131,13 +131,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Battery.cpp" />
     <ClCompile Include="src\EnemyRocket.cpp" />
+    <ClCompile Include="src\Explosion.cpp" />
     <ClCompile Include="src\Interceptor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Missile.cpp" />
     <ClCompile Include="src\Simulation.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Explosion.h" />
     <ClInclude Include="include\Battery.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\EnemyRocket.h" />
@@ -145,6 +149,7 @@
     <ClInclude Include="include\Missile.h" />
     <ClInclude Include="include\Radar.h" />
     <ClInclude Include="include\Simulation.h" />
+    <ClInclude Include="include\SoundManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

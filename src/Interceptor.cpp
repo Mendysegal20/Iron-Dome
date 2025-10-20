@@ -6,16 +6,12 @@ Texture2D Interceptor::interceptorTexture = { 0 };
 
 
 
-
-
 Interceptor::Interceptor(const Vector2& position, const Vector2& velocity)
 	:Missile(position, Vector2{ 1, -1 }, velocity, constants::interceptorWidth, 
 		constants::interceptorHeight)
 {
 	boost = 0.0f;
-	//loadAssets(interceptorTexture, constants::interceptorTexturePath);
 }
-
 
 
 
@@ -45,20 +41,45 @@ void Interceptor::unloadInterceptorTexture()
 
 
 
-//Interceptor::~Interceptor()
-//{
-//	//delete targetPosition;
-//	targetPosition = nullptr;
-//}
 
 
-
-
-void Interceptor::update(const float dt)
+void Interceptor::update(const Line& enemyPos, const float dt)
 {
-	applyForces(dt);
-	rotateHitLine();
+
 	
+	
+	switch (state)
+	{
+		case Idle:
+			// do nothing for now
+			break;
+
+		case Launched:
+			applyForces(dt);
+			rotateHitLine();
+			chase(enemyPos, dt);
+			checkForCollition(enemyPos);
+			break;
+		
+		case HitTarget:
+			// do nothing for now
+			break;
+	}
+	
+	/*if (state == Launched)
+	{
+		applyForces(dt);
+		rotateHitLine();
+	}*/
+
+	/*else if (state == Exploding)
+	{
+		blastHead.currentTime += dt;
+
+		if(blastHead.currentTime >= blastHead.lifetime)
+			state = Destroyed;
+	}*/
+
 	/*velocity.y += -boost * dt;
 	position.x += velocity.x * dt;
 	position.y += velocity.y * dt;
@@ -69,8 +90,12 @@ void Interceptor::update(const float dt)
 
 void Interceptor::draw() const
 {
-	DrawTextureEx(interceptorTexture, position, angle, 1.0f, WHITE);
-	DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
+	
+	if (state == Launched)
+	{
+		DrawTextureEx(interceptorTexture, position, angle, 1.0f, WHITE);
+		DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
+	}
 }
 
 
@@ -79,6 +104,26 @@ void Interceptor::applyForces(const float dt)
 {
 	velocity.y += -boost * dt;
 }
+
+
+Vector2 Interceptor::getHeadPosition() const
+{
+	return hitLine.lineEnd;
+}
+
+
+
+InterceptorState Interceptor::getState() const
+{
+	return state;
+}
+
+
+void Interceptor::lunch()
+{
+	state = Launched;
+}
+
 
 
 
@@ -152,10 +197,13 @@ void Interceptor::chase(const Line& targetPos, const float dt)
 
 
 
+
+
+
 void Interceptor::checkForCollition(const Line& enemy)
 {
 	if (CheckCollisionLines(hitLine.lineStart, hitLine.lineEnd,
 		enemy.lineStart, enemy.lineEnd, NULL))
-			DrawText("Collision!", 400, 100, 30, BLUE);
+			state = HitTarget;
 }
 

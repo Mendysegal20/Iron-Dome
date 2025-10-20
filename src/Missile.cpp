@@ -36,6 +36,12 @@ void Missile::update(const float dt)
 
 
 
+Line Missile::getHitLine() const
+{
+	return hitLine;
+}
+
+
 //void Missile::loadAssets(Texture2D& texture, const char* texturePath)
 //{
 //	if (texture.id == 0)

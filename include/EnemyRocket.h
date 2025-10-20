@@ -16,7 +16,6 @@ public:
 	void draw() const override;
 	float getGravity() const;
 	Vector2 getVelocity() const;
-	Line getHitLine() const;
 
 	
 private:

@@ -150,6 +150,7 @@
     <ClInclude Include="include\Radar.h" />
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\SoundManager.h" />
+    <ClInclude Include="include\SoundsPool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

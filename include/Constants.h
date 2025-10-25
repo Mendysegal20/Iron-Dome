@@ -27,8 +27,10 @@ namespace constants
 	const char explosionTexture[35] = "assets/textures/explosion.png";
 
 
-	const char launchSoundPath[30] = "assets/sounds/launch.mp3";
+	const char launchSoundPath[25] = "assets/sounds/l5.wav";
+	const char launchSound2Path[25] = "assets/sounds/l4.wav";
 
+	const char explosionSoundPath[25] = "assets/sounds/exp2.wav";
 }
 
 

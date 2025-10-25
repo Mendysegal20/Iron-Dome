@@ -5,6 +5,8 @@
 Simulation::~Simulation()
 {
 	UnloadTexture(bgTexture);
+	rockets.clear();
+	explosions.clear();
 
 	SoundManager::unloadAudio();
 	EnemyRocket::unloadRocketTexture();
@@ -93,9 +95,13 @@ void Simulation::updateRockets(const float dt)
 		battery.evaluateThreat(engagement.interceptor, engagement.enemy);
 
 		if (engagement.interceptor.getState() == InterceptorState::HitTarget)
+		{
+			SoundManager::playExplosionSound();
 			explosions.emplace_back(
 				Explosion(engagement.interceptor.getHeadPosition())
 			);
+		}
+			
 	}
 }
 
@@ -141,13 +147,13 @@ void Simulation::removeInactiveObjects()
 
 void Simulation::generateRockets(const float dt)
 {
-	if (lanchEnemyTimer >= 0.5f)
+	if (lanchEnemyTimer >= 1.5f)
 	{
 		lanchEnemyTimer = 0.0f;
 		
 		
 		const float enemyPosX = 1550.0f;
-		const float enemyPosY = static_cast<float>(GetRandomValue(0, 300));
+		const float enemyPosY = static_cast<float>(GetRandomValue(0, 250));
 
 		const float enemySpeedX = static_cast<float>(GetRandomValue(300, 400));
 		const float enemySpeedY = static_cast<float>(GetRandomValue(0, 150));
@@ -157,7 +163,7 @@ void Simulation::generateRockets(const float dt)
 
 		Interceptor interceptor(Vector2{ constants::batteryPosition.x,
 									     constants::batteryPosition.y },
-								Vector2{ enemySpeedX * 2, enemySpeedY * 2 });
+								Vector2{ enemySpeedX * 2.5f, enemySpeedY * 2.5f });
 
 
 		rockets.emplace_back(Engagement(interceptor, enemy));

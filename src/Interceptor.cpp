@@ -46,8 +46,6 @@ void Interceptor::unloadInterceptorTexture()
 void Interceptor::update(const Line& enemyPos, const float dt)
 {
 
-	
-	
 	switch (state)
 	{
 		case Idle:

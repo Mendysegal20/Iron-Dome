@@ -23,6 +23,7 @@ public:
 private:
 
     static Texture2D explosionTexture;
+	static Texture2D onGroundExplosion;
     Vector2 position;
     float lifetime = 0.7f;
     float currentTime = 0.0f;

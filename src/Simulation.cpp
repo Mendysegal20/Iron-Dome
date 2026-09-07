@@ -19,8 +19,6 @@ Simulation::~Simulation()
 
 
 
-
-
 void Simulation::init()
 {
 	//SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -101,7 +99,14 @@ void Simulation::updateRockets(const float dt)
 				Explosion(engagement.interceptor.getHeadPosition())
 			);
 		}
-			
+
+		else if(engagement.enemy.getState() == EnemyState::OnGround)
+		{
+			SoundManager::playExplosionSound();
+			explosions.emplace_back(
+				Explosion(engagement.enemy.getHitLine().lineEnd)
+			);
+		}
 	}
 }
 
@@ -132,10 +137,10 @@ void Simulation::removeInactiveObjects()
 		});
 
 
-
 	std::erase_if(rockets, [](const Engagement& engagement)
 		{
-			return engagement.interceptor.getState() == HitTarget ||
+			return engagement.interceptor.getState() == HitTarget || 
+				 engagement.enemy.getState() == OnGround ||
 				(engagement.enemy.getHitLine().lineStart.x < 0 || /*-constants::screenWidth ||*/
 					engagement.enemy.getHitLine().lineStart.y > constants::screenHeight);
 		});
@@ -156,7 +161,7 @@ void Simulation::generateRockets(const float dt)
 		const float enemyPosY = static_cast<float>(GetRandomValue(0, 250));
 
 		const float enemySpeedX = static_cast<float>(GetRandomValue(300, 400));
-		const float enemySpeedY = static_cast<float>(GetRandomValue(0, 150));
+		const float enemySpeedY = static_cast<float>(GetRandomValue(0, 300));
 		
 		EnemyRocket enemy(Vector2{ enemyPosX, enemyPosY},
 						  Vector2{ enemySpeedX, enemySpeedY });

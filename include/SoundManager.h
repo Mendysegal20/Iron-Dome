@@ -22,6 +22,8 @@ public:
     
     static void init();
     static void unloadAudio();
+
+	
     
     static void playLaunchSound();
 	static void playExplosionSound();
@@ -34,6 +36,8 @@ private:
 	static Wave explosionWave;
     static std::vector<Sound> launchPool;
 	static std::vector<Sound> explosionPool;
+
+    static void playSound(const std::vector<Sound>& sounds);
     //static void update();
     
 	

@@ -3,6 +3,7 @@
 
 
 Texture2D Explosion::explosionTexture = { 0 };
+Texture2D Explosion::onGroundExplosion = { 0 };
 
 
 
@@ -44,12 +45,29 @@ void Explosion::draw() const
 	// אפקט דעיכה: שקיפות פוחתת עם הזמן
 	float alpha = 1.0f - progress; // 1.0 בתחילת הפיצוץ, 0 בסוף
 
-	Vector2 drawPos = {
-		position.x - explosionTexture.width * scale / 2.0f,
-		position.y - explosionTexture.height * scale / 2.0f
-	};
+	
 
-	DrawTextureEx(explosionTexture, drawPos, 0.0f, scale, { 255, 255, 255, static_cast<unsigned char>(255 * alpha) });
+	Vector2 drawPos = { 0.0f, 0.0f };
+	
+	if(position.y >= constants::ground)
+	{
+		drawPos = {
+			position.x - explosionTexture.width * scale / 2.0f,
+			constants::ground - explosionTexture.height * scale / 2.0f
+		};
+		DrawTextureEx(explosionTexture, drawPos, 0.0f, scale, { 255, 255, 255, static_cast<unsigned char>(255 * alpha) });
+	}
+	
+	else
+	{
+		drawPos = {
+		position.x - onGroundExplosion.width * scale / 2.0f,
+		position.y - onGroundExplosion.height * scale / 2.0f
+		};
+
+		DrawTextureEx(onGroundExplosion, drawPos, 0.0f, scale, { 255, 255, 255, static_cast<unsigned char>(255 * alpha) });
+	}
+	
 }
 
 
@@ -65,6 +83,13 @@ void Explosion::loadExplosionTexture()
 		explosionTexture = LoadTextureFromImage(img);
 		UnloadImage(img);
 	}
+
+	 if (onGroundExplosion.id == 0)
+	 {
+		Image img2 = LoadImage(constants::explosionTexture2);
+		onGroundExplosion = LoadTextureFromImage(img2);
+		UnloadImage(img2);
+	 }
 }
 
 
@@ -77,5 +102,11 @@ void Explosion::unloadExplosionTexture()
 	{
 		UnloadTexture(explosionTexture);
 		explosionTexture.id = 0;
+	}
+
+	if (onGroundExplosion.id != 0)
+	{
+		UnloadTexture(onGroundExplosion);
+		onGroundExplosion.id = 0;
 	}
 }

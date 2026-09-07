@@ -11,7 +11,8 @@ EnemyRocket::EnemyRocket(const Vector2& position, const Vector2& velocity)
 	:Missile(position, Vector2{ -1, 1 }, velocity, 
 		constants::rocketWidth, constants::rocketHeight)
 {
-	gravity = 45.0f;
+	//gravity = 45.0f;
+	gravity = static_cast<float>(GetRandomValue(5, 70));
 	//loadAssets(rocketTexture, constants::rocketTexturePath);
 }
 
@@ -64,11 +65,52 @@ void EnemyRocket::unloadRocketTexture()
 
 
 
+
+void EnemyRocket::update(const float dt)
+{
+
+	
+	
+	if (state == InFlight)
+	{
+		
+		checkIfOnGround();
+		applyForces(dt);
+		position.x += velocity.x * dt;
+		position.y += velocity.y * dt;
+		angle = atan2f(velocity.y, velocity.x) * RAD2DEG;
+		rotateHitLine();
+	}
+	
+	else if(state == OnGround)
+	{
+		// do nothing for now
+	}
+
+
+}
+
+
+
+
 void EnemyRocket::draw() const
 {
 	DrawTextureEx(rocketTexture, position, angle, 1.0f, WHITE);
 	DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
 }
+
+
+
+
+
+
+void EnemyRocket::checkIfOnGround()
+{
+	if (hitLine.lineEnd.y >= constants::ground)
+		state = OnGround;
+}
+
+
 
 
 
@@ -87,6 +129,12 @@ float EnemyRocket::getGravity() const
 Vector2 EnemyRocket::getVelocity() const
 {
 	return velocity;
+}
+
+
+EnemyState EnemyRocket::getState() const
+{
+	return state;
 }
 
 

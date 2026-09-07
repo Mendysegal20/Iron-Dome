@@ -1,5 +1,6 @@
 #include "SoundManager.h"
-#include <iostream>
+//#include <iostream>
+#define POOL_SIZE 5
 
 
 
@@ -9,13 +10,15 @@ std::vector<Sound> SoundManager::launchPool = {};
 std::vector<Sound> SoundManager::explosionPool = {};
 
 
+
+
 void SoundManager::init()
 {
     InitAudioDevice();
 	launchWave = LoadWave(constants::launchSoundPath);
 	explosionWave = LoadWave(constants::explosionSoundPath);
 
-	for(int i = 0; i < 4; i++)
+	for(int i = 0; i < POOL_SIZE; i++)
 	{
 		Sound launchSound = LoadSoundFromWave(launchWave);
 		Sound explosionSound = LoadSound(constants::explosionSoundPath);
@@ -28,16 +31,31 @@ void SoundManager::init()
 
 
 
+void SoundManager::playSound(const std::vector<Sound>& sounds)
+{
+	for (const Sound& sound : sounds)
+	{
+		if (!IsSoundPlaying(sound))
+		{
+			PlaySound(sound);
+			return;
+		}
+	}
+}
+
+
+
 
 
 void SoundManager::unloadAudio()
 {
 	UnloadWave(launchWave);
+	UnloadWave(explosionWave);
 
-	for (auto& sound : launchPool)
+	for (Sound& sound : launchPool)
 		UnloadSound(sound);
 
-	for( auto& sound : explosionPool)
+	for( Sound& sound : explosionPool)
 		UnloadSound(sound);
 
 	launchPool.clear();
@@ -51,78 +69,16 @@ void SoundManager::unloadAudio()
 
 void SoundManager::playLaunchSound()
 {
-	for (auto& sound : launchPool)
-	{
-		if (!IsSoundPlaying(sound))
-		{
-			PlaySound(sound);
-			return;
-		}
-	}
+	playSound(launchPool);
 }
 
 
 
 
 void SoundManager::playExplosionSound()
-{
-	for (auto& sound : explosionPool)
-	{
-		if (!IsSoundPlaying(sound))
-		{
-			PlaySound(sound);
-			return;
-		}
-	}
+{	
+	playSound(explosionPool);
 }
 
-
-
-//void SoundManager::playSounds()
-//{
-//    for (auto& soundEffect : soundEffects)
-//    {
-//        if (!soundEffect.isPlayed)
-//        {
-//            PlaySound(soundEffect.sound);
-//            soundEffect.isPlayed = true;
-//        }
-//    }
-//
-//    removePlayedSounds();
-//}
-
-
-
-
-
-//void SoundManager::addLaunchSound()
-//{
-//	Sound launchSound = LoadSound(constants::launchSoundPath);
-//	soundEffects.emplace_back(SoundEffect(launchSound));
-//	playSounds();
-//}
-
-
-
-
-
-//void SoundManager::update()
-//{
-//
-//	std::erase_if(sounds, [](const Sound& sound)
-//		{
-//			if (!IsSoundPlaying(sound))
-//			{
-//				UnloadSound(sound);
-//				return true;
-//			}
-//			
-//			return false;
-//		});
-//
-//	std::cout << "sounds size: " << sounds.size() << "\n";
-//	
-//}
 
 

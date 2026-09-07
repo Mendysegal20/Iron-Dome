@@ -88,7 +88,6 @@ void Interceptor::update(const Line& enemyPos, const float dt)
 
 void Interceptor::draw() const
 {
-	
 	if (state == Launched)
 	{
 		DrawTextureEx(interceptorTexture, position, angle, 1.0f, WHITE);

@@ -46,7 +46,7 @@ private:
 	void updateExplosions(const float dt);
 	void updateRockets(const float dt);
 	void removeInactiveObjects();
-	bool isThreat(const EnemyRocket& enemy);
+	//bool isThreat(const EnemyRocket& enemy);
 	
 };
 

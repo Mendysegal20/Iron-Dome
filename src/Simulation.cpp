@@ -2,6 +2,13 @@
 
 
 
+
+Simulation::Simulation()
+	: bgTexture{ 0 }, deltaTime(0.0f), lanchEnemyTimer(0.0f) { }
+
+
+
+
 Simulation::~Simulation()
 {
 	UnloadTexture(bgTexture);
@@ -21,8 +28,24 @@ Simulation::~Simulation()
 
 void Simulation::init()
 {
+
+	SetConfigFlags(FLAG_VSYNC_HINT);
+	InitWindow(constants::screenWidth, constants::screenHeight, "Iron Dome Simulation");
+	
+	
+	int currentMonitor = GetCurrentMonitor();
+	screenWidth = GetMonitorWidth(currentMonitor);
+	screenHeight = static_cast<int>(GetMonitorHeight(currentMonitor) * 0.92f);
+
 	//SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	InitWindow(1500, 867, "Iron Dome Simulation");
+	//InitWindow(userScreenWidth, userScreenHeight, "Iron Dome Simulation");
+	
+	SetWindowSize(screenWidth, screenHeight);
+	SetWindowPosition(
+		(GetMonitorWidth(currentMonitor) - screenWidth) / 2,
+		(GetMonitorHeight(currentMonitor) - screenHeight) / 2
+	);
+
 	SetTargetFPS(60);
 
 	Image image = LoadImage(constants::bgPath);
@@ -43,17 +66,25 @@ void Simulation::init()
 void Simulation::run()
 {
 
+	Rectangle sourceRec = { 0.0f, 0.0f, (float)bgTexture.width, (float)bgTexture.height };
+
+	// מותחים את התמונה ישירות מתחילת המסך (0,0) ועד לקצה הרוחב והגובה שלו
+	Rectangle destRec = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
+
 	while (!WindowShouldClose())
 	{
 		deltaTime = GetFrameTime();
 
 		BeginDrawing();
 
-		ClearBackground(RAYWHITE);
-		DrawTexture(bgTexture, 0, 0, WHITE);
+			ClearBackground(RAYWHITE);
+			//DrawTexture(bgTexture, 0, 0, WHITE);
 
-		update(deltaTime);
-		generateRockets(deltaTime);
+			// ציור התמונה כך שתכסה את כל המסך ללא שוליים
+			DrawTexturePro(bgTexture, sourceRec, destRec, Vector2{ 0.0f, 0.0f }, 0.0f, WHITE);
+			
+			update(deltaTime);
+			generateRockets(deltaTime);
 		
 		EndDrawing();
 	}
@@ -166,8 +197,8 @@ void Simulation::generateRockets(const float dt)
 		EnemyRocket enemy(Vector2{ enemyPosX, enemyPosY},
 						  Vector2{ enemySpeedX, enemySpeedY });
 
-		Interceptor interceptor(Vector2{ constants::batteryPosition.x,
-									     constants::batteryPosition.y },
+		Interceptor interceptor(Vector2{ /*constants::batteryPosition.x*/ screenWidth * constants::batteryXRatio,
+									     /*constants::batteryPosition.y*/ screenHeight * constants::batteryYRatio },
 								Vector2{ enemySpeedX * 2.5f, enemySpeedY * 2.5f });
 
 

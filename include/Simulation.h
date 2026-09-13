@@ -7,6 +7,8 @@
 #include <vector>
 
 
+
+
 struct Engagement {
 	
 	Engagement() = default;
@@ -24,7 +26,7 @@ class Simulation
 {
 public:
 	
-	Simulation() = default;
+	Simulation();
 	~Simulation();
 	
 	void init();
@@ -34,6 +36,9 @@ private:
 	
 	float deltaTime = 0.0f;
 	float lanchEnemyTimer = 0.0f;
+
+	int screenWidth = 0;
+	int screenHeight = 0;
 	
 	//std::vector<std::pair<Interceptor, EnemyRocket>> rockets;
 	std::vector<Engagement> rockets;

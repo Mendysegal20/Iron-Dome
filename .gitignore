@@ -1,0 +1,18 @@
+# Visual Studio Build Folders
+.vs/
+x64/
+x86/
+Debug/
+Release/
+packages/
+
+# Temporary and Output Files
+*.user
+*.suo
+*.pdb
+*.obj
+*.exe
+*.ilk
+*.log
+*.tlog
+*.ipch

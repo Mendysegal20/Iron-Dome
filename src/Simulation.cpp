@@ -4,7 +4,7 @@
 
 
 Simulation::Simulation()
-	: bgTexture{ 0 }, deltaTime(0.0f), lanchEnemyTimer(0.0f) { }
+	: bgTexture{ 0 }, deltaTime(0.0f), launchEnemyTimer(0.0f) { }
 
 
 
@@ -29,24 +29,27 @@ Simulation::~Simulation()
 void Simulation::init()
 {
 
-	SetConfigFlags(FLAG_VSYNC_HINT);
-	InitWindow(constants::screenWidth, constants::screenHeight, "Iron Dome Simulation");
-	
-	
-	int currentMonitor = GetCurrentMonitor();
-	screenWidth = GetMonitorWidth(currentMonitor);
-	screenHeight = static_cast<int>(GetMonitorHeight(currentMonitor) * 0.92f);
+	//SetConfigFlags(FLAG_VSYNC_HINT);
+	//InitWindow(constants::screenWidth, constants::screenHeight, "Iron Dome Simulation");
+	//
+	//
+	//int currentMonitor = GetCurrentMonitor();
+	//screenWidth = GetMonitorWidth(currentMonitor);
+	//screenHeight = static_cast<int>(GetMonitorHeight(currentMonitor) * 0.92f);
 
-	//SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	//InitWindow(userScreenWidth, userScreenHeight, "Iron Dome Simulation");
-	
-	SetWindowSize(screenWidth, screenHeight);
-	SetWindowPosition(
-		(GetMonitorWidth(currentMonitor) - screenWidth) / 2,
-		(GetMonitorHeight(currentMonitor) - screenHeight) / 2
-	);
+	////SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	////InitWindow(userScreenWidth, userScreenHeight, "Iron Dome Simulation");
+	//
+	//SetWindowSize(screenWidth, screenHeight);
+	//SetWindowPosition(
+	//	(GetMonitorWidth(currentMonitor) - screenWidth) / 2,
+	//	(GetMonitorHeight(currentMonitor) - screenHeight) / 2
+	//);
 
-	SetTargetFPS(60);
+	//SetTargetFPS(60);
+	
+	WindowManager::init();
+
 
 	Image image = LoadImage(constants::bgPath);
 	bgTexture = LoadTextureFromImage(image);
@@ -79,8 +82,6 @@ void Simulation::run()
 
 			ClearBackground(RAYWHITE);
 			//DrawTexture(bgTexture, 0, 0, WHITE);
-
-			// ציור התמונה כך שתכסה את כל המסך ללא שוליים
 			DrawTexturePro(bgTexture, sourceRec, destRec, Vector2{ 0.0f, 0.0f }, 0.0f, WHITE);
 			
 			update(deltaTime);
@@ -173,7 +174,7 @@ void Simulation::removeInactiveObjects()
 			return engagement.interceptor.getState() == HitTarget || 
 				 engagement.enemy.getState() == OnGround ||
 				(engagement.enemy.getHitLine().lineStart.x < 0 || /*-constants::screenWidth ||*/
-					engagement.enemy.getHitLine().lineStart.y > constants::screenHeight);
+					engagement.enemy.getHitLine().lineStart.y > WindowManager::getWindowData().screenHeight /*constants::screenHeight*/);
 		});
 }
 
@@ -183,9 +184,9 @@ void Simulation::removeInactiveObjects()
 
 void Simulation::generateRockets(const float dt)
 {
-	if (lanchEnemyTimer >= 1.5f)
+	if (launchEnemyTimer >= 0.06f)
 	{
-		lanchEnemyTimer = 0.0f;
+		launchEnemyTimer = 0.0f;
 		
 		
 		const float enemyPosX = 1550.0f;
@@ -197,8 +198,8 @@ void Simulation::generateRockets(const float dt)
 		EnemyRocket enemy(Vector2{ enemyPosX, enemyPosY},
 						  Vector2{ enemySpeedX, enemySpeedY });
 
-		Interceptor interceptor(Vector2{ /*constants::batteryPosition.x*/ screenWidth * constants::batteryXRatio,
-									     /*constants::batteryPosition.y*/ screenHeight * constants::batteryYRatio },
+		Interceptor interceptor(Vector2{ WindowManager::getWindowData().batteryPositionX,
+									     WindowManager::getWindowData().batteryPositionY },
 								Vector2{ enemySpeedX * 2.5f, enemySpeedY * 2.5f });
 
 
@@ -209,62 +210,5 @@ void Simulation::generateRockets(const float dt)
 		std::cout << "explosion size: " << explosions.size() << "\n";
 	}
 	else
-		lanchEnemyTimer += dt;
+		launchEnemyTimer += dt;
 }
-
-
-
-
-
-//bool Simulation::isThreat(const EnemyRocket& enemy)
-//{
-//	/*
-//			the formula of motion under gravity is:
-//			y(t) = y0 + vy * t + 0.5 * gt^2
-//
-//			y(t) means the height of the rocket at time t
-//			y0 means the initial height of the rocket
-//			vy means the vertical component of the rocket's velocity
-//			g means the gravity
-//		*/
-//
-//	float a = 0.5f * enemy.getGravity();
-//	float b = enemy.getVelocity().y;
-//	float c = enemy.getHitLine().lineEnd.y - constants::ground;
-//	float discriminant = b * b - 4 * a * c;
-//
-//
-//	if (discriminant < 0.0f)
-//		return false; // No real solutions, the rocket will not hit the ground
-//
-//	float t1 = (-b + sqrtf(discriminant)) / (2 * a);
-//	float t2 = (-b - sqrtf(discriminant)) / (2 * a);
-//	float t = -1.0f;
-//
-//	if (t1 <= 0.0f && t2 <= 0.0f)
-//		return false;
-//
-//	if (t1 > 0.0f && t2 > 0.0f)
-//		t = std::min(t1, t2);
-//
-//	else
-//		t = (t1 > 0.0f) ? t1 : t2;
-//
-//	if (t <= 0.0f)
-//		return false; // Both solutions aren't positive, the rocket will not hit the ground
-//
-//
-//	//float bufferTime = 0.3f;
-//	float impactX = enemy.getHitLine().lineEnd.x + enemy.getVelocity().x * t; //(t * bufferTime);
-//
-//
-//	if ((impactX < constants::cityRightBoundary.x
-//		&& impactX > constants::cityLeftBoundary.x))
-//		return true;
-//
-//	return false;
-//}
-
-
-
-

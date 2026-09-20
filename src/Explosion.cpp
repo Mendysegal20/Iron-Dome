@@ -49,11 +49,11 @@ void Explosion::draw() const
 
 	Vector2 drawPos = { 0.0f, 0.0f };
 	
-	if(position.y >= constants::ground)
+	if(position.y >= WindowManager::getWindowData().ground /*constants::ground*/)
 	{
 		drawPos = {
 			position.x - explosionTexture.width * scale / 2.0f,
-			constants::ground - explosionTexture.height * scale / 2.0f
+			/*constants::ground*/ WindowManager::getWindowData().ground - explosionTexture.height * scale / 2.0f
 		};
 		DrawTextureEx(explosionTexture, drawPos, 0.0f, scale, { 255, 255, 255, static_cast<unsigned char>(255 * alpha) });
 	}

@@ -56,7 +56,7 @@ void Interceptor::update(const Line& enemyPos, const float dt)
 			applyForces(dt);
 			rotateHitLine();
 			chase(enemyPos, dt);
-			checkForCollition(enemyPos);
+			checkForCollision(enemyPos);
 			break;
 		
 		case HitTarget:
@@ -116,7 +116,7 @@ InterceptorState Interceptor::getState() const
 }
 
 
-void Interceptor::lunch()
+void Interceptor::launch()
 {
 	state = Launched;
 }
@@ -197,7 +197,7 @@ void Interceptor::chase(const Line& targetPos, const float dt)
 
 
 
-void Interceptor::checkForCollition(const Line& enemy)
+void Interceptor::checkForCollision(const Line& enemy)
 {
 	if (CheckCollisionLines(hitLine.lineStart, hitLine.lineEnd,
 		enemy.lineStart, enemy.lineEnd, NULL))

@@ -8,7 +8,7 @@ Texture2D EnemyRocket::rocketTexture = { 0 };
 
 
 EnemyRocket::EnemyRocket(const Vector2& position, const Vector2& velocity)
-	:Missile(position, Vector2{ -1, 1 }, velocity, 
+	:Missile(position, Vector2{ -1, 1 }, velocity,
 		constants::rocketWidth, constants::rocketHeight)
 {
 	//gravity = 45.0f;
@@ -106,7 +106,7 @@ void EnemyRocket::draw() const
 
 void EnemyRocket::checkIfOnGround()
 {
-	if (hitLine.lineEnd.y >= constants::ground)
+	if (hitLine.lineEnd.y >= WindowManager::getWindowData().ground /*constants::ground*/)
 		state = OnGround;
 }
 

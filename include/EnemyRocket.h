@@ -1,5 +1,6 @@
 #pragma once
 #include "Missile.h"
+#include "WindowManager.h"
 
 
 enum EnemyState {

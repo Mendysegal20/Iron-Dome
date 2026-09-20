@@ -11,7 +11,7 @@ void Battery::evaluateThreat(Interceptor& interceptor, const EnemyRocket& enemy)
 	if (isThreat(enemy) && interceptor.getState() == InterceptorState::Idle)
 	{
 		SoundManager::playLaunchSound();
-		interceptor.lunch();
+		interceptor.launch();
 	}
 		
 }
@@ -23,10 +23,10 @@ void Battery::evaluateThreat(Interceptor& interceptor, const EnemyRocket& enemy)
 
 bool Battery::isThreat(const EnemyRocket& enemy)
 {
-	if (enemy.getHitLine().lineEnd.y >= constants::ground)
+	if (enemy.getHitLine().lineEnd.y >= WindowManager::getWindowData().ground /*constants::ground*/)
 		return false; // already on the ground
 
-	if (enemy.getHitLine().lineEnd.x < constants::cityLeftBoundary.x)
+	if (enemy.getHitLine().lineEnd.x < WindowManager::getWindowData().cityLeftBoundary.x /*constants::cityLeftBoundary.x*/)
 		return false;
 
 	/*
@@ -41,7 +41,7 @@ bool Battery::isThreat(const EnemyRocket& enemy)
 
 	float a = 0.5f * enemy.getGravity();
 	float b = enemy.getVelocity().y;
-	float c = enemy.getHitLine().lineEnd.y - constants::ground;
+	float c = enemy.getHitLine().lineEnd.y - WindowManager::getWindowData().ground /*constants::ground*/;
 	float discriminant = b * b - 4 * a * c;
 
 
@@ -69,8 +69,8 @@ bool Battery::isThreat(const EnemyRocket& enemy)
 	float impactX = enemy.getHitLine().lineEnd.x + enemy.getVelocity().x * t; //(t * bufferTime);
 
 
-	if ((impactX < constants::cityRightBoundary.x
-		&& impactX > constants::cityLeftBoundary.x))
+	if ((impactX < WindowManager::getWindowData().cityRightBoundary.x /*constants::cityRightBoundary.x*/
+		&& impactX > WindowManager::getWindowData().cityLeftBoundary.x))
 			return true;
 
 	return false;

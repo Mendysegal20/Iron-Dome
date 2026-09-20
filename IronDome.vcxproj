@@ -139,6 +139,7 @@
     <ClCompile Include="src\Missile.cpp" />
     <ClCompile Include="src\Simulation.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
+    <ClCompile Include="src\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Explosion.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="include\SoundManager.h" />
     <ClInclude Include="include\SoundsPool.h" />
     <ClInclude Include="include\Ui.h" />
+    <ClInclude Include="include\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

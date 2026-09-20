@@ -22,10 +22,10 @@ public:
 	//void update(const float dt) override;
 	void chase(const Line& targetPos, const float dt);
 	void draw() const override;
-	void checkForCollition(const Line& enemy);
+	void checkForCollision(const Line& enemy);
 	Vector2 getHeadPosition() const;
 	InterceptorState getState() const;
-	void lunch();
+	void launch();
 	
 	static void loadInterceptorTexture();
 	static void unloadInterceptorTexture();

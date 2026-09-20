@@ -1,6 +1,7 @@
 #pragma once
 #include <raylib.h>
 #include "Constants.h"
+#include "WindowManager.h"
 #include <cmath>
 
 

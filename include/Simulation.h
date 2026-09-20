@@ -4,6 +4,7 @@
 #include "Interceptor.h"
 #include "Explosion.h"
 #include "SoundManager.h"
+#include "WindowManager.h"
 #include <vector>
 
 
@@ -35,7 +36,7 @@ public:
 private:
 	
 	float deltaTime = 0.0f;
-	float lanchEnemyTimer = 0.0f;
+	float launchEnemyTimer = 0.0f;
 
 	int screenWidth = 0;
 	int screenHeight = 0;

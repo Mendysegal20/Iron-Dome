@@ -3,6 +3,7 @@
 #include "EnemyRocket.h"
 #include "Interceptor.h"
 #include "Explosion.h"
+#include "AssetsManager.h"
 #include "SoundManager.h"
 #include "WindowManager.h"
 #include <vector>
@@ -44,7 +45,9 @@ private:
 	//std::vector<std::pair<Interceptor, EnemyRocket>> rockets;
 	std::vector<Engagement> rockets;
 	std::vector<Explosion> explosions;
-	Texture2D bgTexture;
+	//Texture2D bgTexture;
+	AssetsManager assetsManager;
+	
 	Battery battery;
 	
 	void generateRockets(const float dt);

@@ -4,21 +4,21 @@
 
 
 Simulation::Simulation()
-	: bgTexture{ 0 }, deltaTime(0.0f), launchEnemyTimer(0.0f) { }
+	: /*bgTexture{ 0 },*/ deltaTime(0.0f), launchEnemyTimer(0.0f) { }
 
 
 
 
 Simulation::~Simulation()
 {
-	UnloadTexture(bgTexture);
+	//UnloadTexture(bgTexture);
 	rockets.clear();
 	explosions.clear();
 
-	SoundManager::unloadAudio();
+	/*SoundManager::unloadAudio();
 	EnemyRocket::unloadRocketTexture();
 	Interceptor::unloadInterceptorTexture();
-	Explosion::unloadExplosionTexture();
+	Explosion::unloadExplosionTexture();*/
 }
 
 
@@ -49,16 +49,17 @@ void Simulation::init()
 	//SetTargetFPS(60);
 	
 	WindowManager::init();
+	assetsManager.init();
 
 
-	Image image = LoadImage(constants::bgPath);
+	/*Image image = LoadImage(constants::bgPath);
 	bgTexture = LoadTextureFromImage(image);
-	UnloadImage(image);
+	UnloadImage(image);*/
 
-	SoundManager::init();
+	/*SoundManager::init();
 	EnemyRocket::loadRocketTexture();
 	Interceptor::loadInterceptorTexture();
-	Explosion::loadExplosionTexture();
+	Explosion::loadExplosionTexture();*/
 }
 
 
@@ -69,7 +70,8 @@ void Simulation::init()
 void Simulation::run()
 {
 
-	Rectangle sourceRec = { 0.0f, 0.0f, (float)bgTexture.width, (float)bgTexture.height };
+	Rectangle sourceRec = { 0.0f, 0.0f, (float)assetsManager.getBackgroundImage().width, 
+		(float)assetsManager.getBackgroundImage().height };
 
 	// מותחים את התמונה ישירות מתחילת המסך (0,0) ועד לקצה הרוחב והגובה שלו
 	Rectangle destRec = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
@@ -82,7 +84,7 @@ void Simulation::run()
 
 			ClearBackground(RAYWHITE);
 			//DrawTexture(bgTexture, 0, 0, WHITE);
-			DrawTexturePro(bgTexture, sourceRec, destRec, Vector2{ 0.0f, 0.0f }, 0.0f, WHITE);
+			DrawTexturePro(assetsManager.getBackgroundImage(), sourceRec, destRec, Vector2{ 0.0f, 0.0f }, 0.0f, WHITE);
 			
 			update(deltaTime);
 			generateRockets(deltaTime);
@@ -184,12 +186,12 @@ void Simulation::removeInactiveObjects()
 
 void Simulation::generateRockets(const float dt)
 {
-	if (launchEnemyTimer >= 0.06f)
+	if (launchEnemyTimer >= 1.0f)
 	{
 		launchEnemyTimer = 0.0f;
 		
 		
-		const float enemyPosX = 1550.0f;
+		const float enemyPosX = WindowManager::getWindowData().screenWidth + 50.0f;
 		const float enemyPosY = static_cast<float>(GetRandomValue(0, 250));
 
 		const float enemySpeedX = static_cast<float>(GetRandomValue(300, 400));

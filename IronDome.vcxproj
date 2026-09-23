@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AssetsManager.cpp" />
     <ClCompile Include="src\Battery.cpp" />
     <ClCompile Include="src\EnemyRocket.cpp" />
     <ClCompile Include="src\Explosion.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="src\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\Explosion.h" />
     <ClInclude Include="include\Battery.h" />
     <ClInclude Include="include\Constants.h" />

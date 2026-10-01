@@ -96,7 +96,7 @@ void EnemyRocket::update(const float dt)
 void EnemyRocket::draw() const
 {
 	DrawTextureEx(rocketTexture, position, angle, 1.0f, WHITE);
-	DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
+	//DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
 }
 
 

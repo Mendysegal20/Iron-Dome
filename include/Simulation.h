@@ -38,16 +38,9 @@ private:
 	
 	float deltaTime = 0.0f;
 	float launchEnemyTimer = 0.0f;
-
-	int screenWidth = 0;
-	int screenHeight = 0;
 	
-	//std::vector<std::pair<Interceptor, EnemyRocket>> rockets;
 	std::vector<Engagement> rockets;
 	std::vector<Explosion> explosions;
-	//Texture2D bgTexture;
-	AssetsManager assetsManager;
-	
 	Battery battery;
 	
 	void generateRockets(const float dt);

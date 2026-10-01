@@ -91,7 +91,7 @@ void Interceptor::draw() const
 	if (state == Launched)
 	{
 		DrawTextureEx(interceptorTexture, position, angle, 1.0f, WHITE);
-		DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
+		//DrawLineV(hitLine.lineStart, hitLine.lineEnd, RED);
 	}
 }
 

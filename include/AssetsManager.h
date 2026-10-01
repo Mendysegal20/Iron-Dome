@@ -15,10 +15,11 @@ class AssetsManager
 public:
 
 	//AssetsManager(); // ctor
-	~AssetsManager(); // dtor
+	//~AssetsManager(); // dtor
 
 	static void init();
 	static const Texture2D& getBackgroundImage();
+	static void unloadAssets();
 
 private:
 

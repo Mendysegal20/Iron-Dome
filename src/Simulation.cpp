@@ -4,21 +4,16 @@
 
 
 Simulation::Simulation()
-	: /*bgTexture{ 0 },*/ deltaTime(0.0f), launchEnemyTimer(0.0f) { }
+	: deltaTime(0.0f), launchEnemyTimer(0.0f) { }
 
 
 
 
 Simulation::~Simulation()
 {
-	//UnloadTexture(bgTexture);
 	rockets.clear();
 	explosions.clear();
-
-	/*SoundManager::unloadAudio();
-	EnemyRocket::unloadRocketTexture();
-	Interceptor::unloadInterceptorTexture();
-	Explosion::unloadExplosionTexture();*/
+	AssetsManager::unloadAssets();
 }
 
 
@@ -27,39 +22,9 @@ Simulation::~Simulation()
 
 
 void Simulation::init()
-{
-
-	//SetConfigFlags(FLAG_VSYNC_HINT);
-	//InitWindow(constants::screenWidth, constants::screenHeight, "Iron Dome Simulation");
-	//
-	//
-	//int currentMonitor = GetCurrentMonitor();
-	//screenWidth = GetMonitorWidth(currentMonitor);
-	//screenHeight = static_cast<int>(GetMonitorHeight(currentMonitor) * 0.92f);
-
-	////SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	////InitWindow(userScreenWidth, userScreenHeight, "Iron Dome Simulation");
-	//
-	//SetWindowSize(screenWidth, screenHeight);
-	//SetWindowPosition(
-	//	(GetMonitorWidth(currentMonitor) - screenWidth) / 2,
-	//	(GetMonitorHeight(currentMonitor) - screenHeight) / 2
-	//);
-
-	//SetTargetFPS(60);
-	
+{	
 	WindowManager::init();
-	assetsManager.init();
-
-
-	/*Image image = LoadImage(constants::bgPath);
-	bgTexture = LoadTextureFromImage(image);
-	UnloadImage(image);*/
-
-	/*SoundManager::init();
-	EnemyRocket::loadRocketTexture();
-	Interceptor::loadInterceptorTexture();
-	Explosion::loadExplosionTexture();*/
+	AssetsManager::init();
 }
 
 
@@ -70,8 +35,8 @@ void Simulation::init()
 void Simulation::run()
 {
 
-	Rectangle sourceRec = { 0.0f, 0.0f, (float)assetsManager.getBackgroundImage().width, 
-		(float)assetsManager.getBackgroundImage().height };
+	Rectangle sourceRec = { 0.0f, 0.0f, (float)AssetsManager::getBackgroundImage().width, 
+		(float)AssetsManager::getBackgroundImage().height };
 
 	// מותחים את התמונה ישירות מתחילת המסך (0,0) ועד לקצה הרוחב והגובה שלו
 	Rectangle destRec = { 0.0f, 0.0f, (float)GetScreenWidth(), (float)GetScreenHeight() };
@@ -84,7 +49,7 @@ void Simulation::run()
 
 			ClearBackground(RAYWHITE);
 			//DrawTexture(bgTexture, 0, 0, WHITE);
-			DrawTexturePro(assetsManager.getBackgroundImage(), sourceRec, destRec, Vector2{ 0.0f, 0.0f }, 0.0f, WHITE);
+			DrawTexturePro(AssetsManager::getBackgroundImage(), sourceRec, destRec, Vector2{ 0.0f, 0.0f }, 0.0f, WHITE);
 			
 			update(deltaTime);
 			generateRockets(deltaTime);
@@ -186,15 +151,15 @@ void Simulation::removeInactiveObjects()
 
 void Simulation::generateRockets(const float dt)
 {
-	if (launchEnemyTimer >= 1.0f)
+	if (launchEnemyTimer >= 0.8f)
 	{
 		launchEnemyTimer = 0.0f;
 		
 		
 		const float enemyPosX = WindowManager::getWindowData().screenWidth + 50.0f;
-		const float enemyPosY = static_cast<float>(GetRandomValue(0, 250));
+		const float enemyPosY = static_cast<float>(GetRandomValue(0, 450));
 
-		const float enemySpeedX = static_cast<float>(GetRandomValue(300, 400));
+		const float enemySpeedX = static_cast<float>(GetRandomValue(350, 450));
 		const float enemySpeedY = static_cast<float>(GetRandomValue(0, 300));
 		
 		EnemyRocket enemy(Vector2{ enemyPosX, enemyPosY},

@@ -21,16 +21,26 @@ void AssetsManager::init()
 }
 
 
-
-AssetsManager::~AssetsManager()
+void AssetsManager::unloadAssets()
 {
-
 	UnloadTexture(bgTexture);
 	SoundManager::unloadAudio();
 	EnemyRocket::unloadRocketTexture();
 	Interceptor::unloadInterceptorTexture();
 	Explosion::unloadExplosionTexture();
-}
+}	
+
+
+
+//AssetsManager::~AssetsManager()
+//{
+//
+//	UnloadTexture(bgTexture);
+//	SoundManager::unloadAudio();
+//	EnemyRocket::unloadRocketTexture();
+//	Interceptor::unloadInterceptorTexture();
+//	Explosion::unloadExplosionTexture();
+//}
 
 
 

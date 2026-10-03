@@ -19,6 +19,7 @@ struct Engagement {
 	
 	Interceptor interceptor;
 	EnemyRocket enemy;
+	bool isActive = true;
 };
 
 

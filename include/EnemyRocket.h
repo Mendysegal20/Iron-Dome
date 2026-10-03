@@ -24,6 +24,7 @@ public:
 	float getGravity() const;
 	EnemyState getState() const;
 	Vector2 getVelocity() const;
+	bool isOutOfBounds(const int& screenWidth, const int& screenHeight) const override;
 
 	
 private:

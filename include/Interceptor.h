@@ -26,6 +26,7 @@ public:
 	Vector2 getHeadPosition() const;
 	InterceptorState getState() const;
 	void launch();
+	bool isOutOfBounds(const int& screenWidth, const int& screenHeight) const override;
 	
 	static void loadInterceptorTexture();
 	static void unloadInterceptorTexture();

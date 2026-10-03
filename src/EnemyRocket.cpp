@@ -106,7 +106,7 @@ void EnemyRocket::draw() const
 
 void EnemyRocket::checkIfOnGround()
 {
-	if (hitLine.lineEnd.y >= WindowManager::getWindowData().ground /*constants::ground*/)
+	if (hitLine.lineEnd.y >= WindowManager::getWindowData().ground)
 		state = OnGround;
 }
 
@@ -135,6 +135,12 @@ Vector2 EnemyRocket::getVelocity() const
 EnemyState EnemyRocket::getState() const
 {
 	return state;
+}
+
+
+bool EnemyRocket::isOutOfBounds(const int& screenWidth, const int& screenHeight) const
+{
+	return (hitLine.lineStart.x < 0 || hitLine.lineStart.y > screenHeight);
 }
 
 

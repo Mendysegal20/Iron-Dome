@@ -23,6 +23,7 @@ public:
 	virtual void draw() const = 0;
 	virtual void update(const float dt);
 	Line getHitLine() const;
+	virtual bool isOutOfBounds(const int& screenWidth, const int& screenHeight) const = 0;
 
 	
 protected:

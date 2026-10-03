@@ -9,7 +9,11 @@ Texture2D Explosion::onGroundExplosion = { 0 };
 
 
 Explosion::Explosion(const Vector2& pos) 
-	: position(pos), active(true) {}
+	: position(pos), active(true)
+{
+	// Random scale between 90% and 110% of the base size
+	maxScale = static_cast<float>(GetRandomValue(90, 110)) / 100.0f;
+}
 
 
 
@@ -38,9 +42,11 @@ void Explosion::draw() const
 	if (!active) return;
 
 	float progress = currentTime / lifetime; // 0 -> 1
+	float baseGrowth = 0.7f + 0.7f * progress;
 
-	// אפקט גדילה קלה בהתחלה
-	float scale = 0.7f + 0.7f * progress; // מתחיל ב-0.5, גדל עד 1.0
+
+	// אפקט גדילה רנדומלי
+	float scale = baseGrowth * maxScale; // מתחיל ב-0.5, גדל עד 1.0
 
 	// אפקט דעיכה: שקיפות פוחתת עם הזמן
 	float alpha = 1.0f - progress; // 1.0 בתחילת הפיצוץ, 0 בסוף
@@ -53,7 +59,7 @@ void Explosion::draw() const
 	{
 		drawPos = {
 			position.x - explosionTexture.width * scale / 2.0f,
-			/*constants::ground*/ WindowManager::getWindowData().ground - explosionTexture.height * scale / 2.0f
+			WindowManager::getWindowData().ground - explosionTexture.height * scale / 2.0f
 		};
 		DrawTextureEx(explosionTexture, drawPos, 0.0f, scale, { 255, 255, 255, static_cast<unsigned char>(255 * alpha) });
 	}

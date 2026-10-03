@@ -204,3 +204,11 @@ void Interceptor::checkForCollision(const Line& enemy)
 			state = HitTarget;
 }
 
+
+
+
+bool Interceptor::isOutOfBounds(const int& screenWidth, const int& screenHeight) const
+{
+	return  hitLine.lineStart.x > screenWidth || hitLine.lineStart.y < 0;
+}
+

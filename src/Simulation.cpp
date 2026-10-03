@@ -83,24 +83,40 @@ void Simulation::updateRockets(const float dt)
 {
 	for (Engagement& engagement : rockets)
 	{
-		engagement.interceptor.update(engagement.enemy.getHitLine(), dt);
-		engagement.interceptor.draw();
+		
 
-		engagement.enemy.update(dt);
-		engagement.enemy.draw();
+		if(!engagement.interceptor.isOutOfBounds(WindowManager::getWindowData().screenWidth, 
+			WindowManager::getWindowData().screenHeight) && engagement.interceptor.getState() == InterceptorState::Launched)
+		{
+			engagement.interceptor.update(engagement.enemy.getHitLine(), dt);
+			engagement.interceptor.draw();
+		}
 
+		if (!engagement.enemy.isOutOfBounds(WindowManager::getWindowData().screenWidth, 
+			WindowManager::getWindowData().screenHeight) && engagement.enemy.getState() == EnemyState::InFlight)
+		{
+			engagement.enemy.update(dt);
+			engagement.enemy.draw();
+		}
+
+		
+		
 		battery.evaluateThreat(engagement.interceptor, engagement.enemy);
 
-		if (engagement.interceptor.getState() == InterceptorState::HitTarget)
+		
+		
+		if (engagement.interceptor.getState() == InterceptorState::HitTarget && engagement.isActive)
 		{
+			engagement.isActive = false;
 			SoundManager::playExplosionSound();
 			explosions.emplace_back(
 				Explosion(engagement.interceptor.getHeadPosition())
 			);
 		}
 
-		else if(engagement.enemy.getState() == EnemyState::OnGround)
+		else if(engagement.enemy.getState() == EnemyState::OnGround && engagement.isActive)
 		{
+			engagement.isActive = false;
 			SoundManager::playExplosionSound();
 			explosions.emplace_back(
 				Explosion(engagement.enemy.getHitLine().lineEnd)
@@ -130,19 +146,42 @@ void Simulation::updateExplosions(const float dt)
 
 void Simulation::removeInactiveObjects()
 {
+	const int screenW = WindowManager::getWindowData().screenWidth;
+	const int screenH = WindowManager::getWindowData().screenHeight;
+
 	std::erase_if(explosions, [](const Explosion& explosion)
 		{
 			return !explosion.isActive();
 		});
 
 
-	std::erase_if(rockets, [](const Engagement& engagement)
+	std::erase_if(rockets, [screenW, screenH](const Engagement& engagement)
 		{
-			return engagement.interceptor.getState() == HitTarget || 
-				 engagement.enemy.getState() == OnGround ||
-				(engagement.enemy.getHitLine().lineStart.x < 0 || /*-constants::screenWidth ||*/
-					engagement.enemy.getHitLine().lineStart.y > WindowManager::getWindowData().screenHeight /*constants::screenHeight*/);
+			
+
+				bool interception = engagement.interceptor.getState() == HitTarget;
+				   
+				bool missedInterception = engagement.enemy.getState() == OnGround &&
+					(engagement.interceptor.isOutOfBounds(screenW, screenH) || engagement.interceptor.getState() == InterceptorState::Idle);
+				   
+				bool bothOutOfBounds = engagement.interceptor.isOutOfBounds(screenW, screenH) &&
+					engagement.enemy.isOutOfBounds(screenW, screenH);
+
+				bool interceptorWasNotLaunched = engagement.interceptor.getState() == InterceptorState::Idle &&
+					(engagement.enemy.isOutOfBounds(screenW, screenH) || engagement.enemy.getState() == OnGround);
+
+				return interception || missedInterception || bothOutOfBounds || interceptorWasNotLaunched;
+
 		});
+
+
+	//std::erase_if(rockets, [](const Engagement& engagement)
+	//	{
+	//		return engagement.interceptor.getState() == HitTarget || 
+	//			 engagement.enemy.getState() == OnGround ||
+	//			(engagement.enemy.getHitLine().lineStart.x < 0 || /*-constants::screenWidth ||*/
+	//				engagement.enemy.getHitLine().lineStart.y > WindowManager::getWindowData().screenHeight /*constants::screenHeight*/);
+	//	});
 }
 
 

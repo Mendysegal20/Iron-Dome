@@ -29,4 +29,5 @@ private:
     float lifetime = 0.7f;
     float currentTime = 0.0f;
     bool active;
+	float maxScale;
 };
